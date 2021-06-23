@@ -19,18 +19,13 @@ import java.io.InputStream;
 
 public class MybatisStart {
 
+
     /**
-     * 1、导入JDBC驱动包
-     * 2、创建DriverManager 注册驱动
-     * 3、创建连接
-     * 4、创建Statement
-     * 5、CRUD
-     * 6、操作结果集
-     * 7、关闭连接
+     * 读取配置文件进行查询
      */
     @Test
     public void start(){
-        String resource = "org/mybatis/example/mybatis-config.xml";
+        String resource = "mybatis-config.xml";
         InputStream inputStream = null;
         try {
             inputStream = Resources.getResourceAsStream(resource);
@@ -38,6 +33,9 @@ public class MybatisStart {
             e.printStackTrace();
         }
         SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        BlogMapper mapper = sqlSession.getMapper(BlogMapper.class);
+        System.out.println(mapper.findOne(10001));
     }
     private static DataSource getDataSource() {
         DruidDataSource druidDataSource = new DruidDataSource();
@@ -47,6 +45,15 @@ public class MybatisStart {
         return druidDataSource;
     }
 
+    /**
+     * 1、导入JDBC驱动包
+     * 2、创建DriverManager 注册驱动
+     * 3、创建连接
+     * 4、创建Statement
+     * 5、CRUD
+     * 6、操作结果集
+     * 7、关闭连接
+     */
     @Test
     public void start2(){
         DataSource dataSource = getDataSource();
@@ -64,8 +71,12 @@ public class MybatisStart {
          * org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): org.myatis.example.mapper.BlogMapper.findOne
          *
          * 查看target目录可以看到 BlogMapper.xml没有被扫描到，需要将xml文件放入resource文件夹下才能被扫描得到，
+         * 1、
          * 这里可以通过复制粘贴将xml放到和BlogMapper同级目录下，执行可以查询到代码
          * 结果：Blog(id=10001, title=文章10001, author=宣鹏, createTime=Wed Jun 23 19:11:55 CST 2021)
+         * 2、
+         * 可以通过在pom中加入resource进行指定
+         *
          */
     }
 }

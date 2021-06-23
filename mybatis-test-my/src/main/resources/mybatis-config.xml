@@ -5,10 +5,6 @@
 <configuration>
     <!-- 引用db.properties配置文件 -->
     <properties resource="db.properties" />
-    <typeAliases>
-        <typeAlias type="com.alibaba.druid.support.ibatis.DruidDataSourceFactory"
-                   alias="DRUID" />
-    </typeAliases>
     <environments default="development">
         <environment id="development">
             <transactionManager type="JDBC"/>
@@ -21,4 +17,14 @@
         </environment>
     </environments>
 
+    <mappers>
+        <!-- 使用相对于类路径的资源引用 -->
+<!--        <mapper resource="org/myatis/example/mapper/BlogMapper.xml"/>-->
+        <!-- 使用完全限定资源定位符（URL） -->
+        <!--<mapper url="file:///var/mappers/AuthorMapper.xml"/>-->
+        <!-- 使用映射器接口实现类的完全限定类名 -->
+        <mapper class="org.myatis.example.mapper.BlogMapper"/>
+        <!-- 将包内的映射器接口实现全部注册为映射器 -->
+<!--        <package name="org.mybatis.example.mapper"/>-->
+    </mappers>
 </configuration>
