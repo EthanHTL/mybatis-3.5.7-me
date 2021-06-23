@@ -1,5 +1,5 @@
 /**
- *    Copyright ${license.git.copyrightYears} the original author or authors.
+ *    Copyright 2009-2021 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -21,10 +21,16 @@ import org.apache.ibatis.transaction.TransactionFactory;
 
 /**
  * @author Clinton Begin
+ *
+ * 环境
+ * 决定加载哪种环境(开发环境/生产环境)
  */
 public final class Environment {
+  //环境id
   private final String id;
+  //事务工厂
   private final TransactionFactory transactionFactory;
+  //数据源
   private final DataSource dataSource;
 
   public Environment(String id, TransactionFactory transactionFactory, DataSource dataSource) {
@@ -42,6 +48,9 @@ public final class Environment {
     this.dataSource = dataSource;
   }
 
+  //一个静态内部类Builder
+  //建造模式
+  //用法应该是new Environment.Builder(id).transactionFactory(xx).dataSource(xx).build();
   public static class Builder {
     private final String id;
     private TransactionFactory transactionFactory;

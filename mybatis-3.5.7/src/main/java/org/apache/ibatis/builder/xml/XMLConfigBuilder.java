@@ -1,5 +1,5 @@
 /**
- *    Copyright ${license.git.copyrightYears} the original author or authors.
+ *    Copyright 2009-2021 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -50,6 +50,8 @@ import org.apache.ibatis.type.JdbcType;
 /**
  * @author Clinton Begin
  * @author Kazuki Shimizu
+ *
+ * XML配置构建器，建造者模式,继承BaseBuilder
  */
 public class XMLConfigBuilder extends BaseBuilder {
 
@@ -66,7 +68,9 @@ public class XMLConfigBuilder extends BaseBuilder {
     this(reader, environment, null);
   }
 
+  //构造函数，转换成XPathParser再去调用构造函数
   public XMLConfigBuilder(Reader reader, String environment, Properties props) {
+    //构造一个需要验证，XMLMapperEntityResolver的XPathParser
     this(new XPathParser(reader, true, props, new XMLMapperEntityResolver()), environment, props);
   }
 
